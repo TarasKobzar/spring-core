@@ -2,11 +2,15 @@ package com.andreitop.xml.unit;
 
 import com.andreitop.xml.mount.Mount;
 import com.andreitop.xml.mount.Wolf;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Stream;
 
-
+@Component("zulJin")
 public class Troll implements Unit {
     private List<Mount> listOfMounts;
     private Set<Mount> setOfMounts;
@@ -19,7 +23,8 @@ public class Troll implements Unit {
         return colorCode;
     }
 
-    public void setColorCode(int colorCode) {
+    @Autowired
+    public void setColorCode(@Value("#{T(java.util.concurrent.ThreadLocalRandom).current().nextInt(2,10)}") int colorCode) {
         this.colorCode = colorCode;
     }
 
@@ -27,19 +32,23 @@ public class Troll implements Unit {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    @Autowired
+    public void setCreationDate( Date creationDate) {
         this.creationDate = creationDate;
     }
 
-    public void setListOfMounts(List<Mount> listOfMounts) {
+    @Autowired
+    public void setListOfMounts(@Qualifier("listOfMounts") List<Mount> listOfMounts) {
         this.listOfMounts = listOfMounts;
     }
 
+    @Autowired
     public void setSetOfMounts(Set<Mount> setOfMounts) {
         this.setOfMounts = setOfMounts;
     }
 
-    public void setMapOfMounts(Map<String, Mount> mapOfMounts) {
+    @Autowired
+    public void setMapOfMounts(@Qualifier("trollMountMap") Map<String, Mount> mapOfMounts) {
         this.mapOfMounts = mapOfMounts;
     }
 
